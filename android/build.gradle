@@ -1,0 +1,61 @@
+group 'com.flutter_easemob_kefu'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.3.50'
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        main.jniLibs.srcDirs = ['libs']
+    }
+    defaultConfig {
+        minSdkVersion 16
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    useLibrary 'org.apache.http.legacy'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //环信客服SDK
+    implementation 'com.easemob:kefu-sdk:1.3.0'
+    //EaseUI中 头像获取用到了glide，请添加glide库
+    implementation 'com.github.bumptech.glide:glide:4.7.1' //其他版本也可以
+    //EaseUI中，fragment用到了android-support-v4包
+    api 'com.android.support:appcompat-v7:28.0.0-alpha1'
+    implementation 'com.android.support:support-v4:28.0.0'
+
+}
